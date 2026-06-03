@@ -45,7 +45,7 @@ def render_earthquake_map(dff, view_mode, latest):
                 radius=50000,
                 elevation_scale=50,
                 extruded=True,
-                pickable=True,
+                pickable=False,
             )
         )
 
@@ -95,17 +95,17 @@ def render_earthquake_map(dff, view_mode, latest):
     view_state = pdk.ViewState(
         latitude=dff["latitude"].mean(),
         longitude=dff["longitude"].mean(),
-        zoom=2.5,
+        zoom=3,
         pitch=60 if view_mode in ["Hexagon", "3D Scatter"] else 0,
     )
 
     tooltip = {
         "html": """
-        <b>Magnitude:</b> {magnitude_fmt}<br/>
-        <b>Depth:</b> {depth_fmt} km<br/>
-        <b>Location:</b> {place}<br/>
-        <b>Time (UTC):</b> {time_fmt}
-        """,
+            <b>Magnitude:</b> {magnitude_fmt}<br/>
+            <b>Depth:</b> {depth_fmt} km<br/>
+            <b>Location:</b> {place}<br/>
+            <b>Time (UTC):</b> {time_fmt}
+            """,
         "style": {"backgroundColor": "black", "color": "white"}
     }
 
