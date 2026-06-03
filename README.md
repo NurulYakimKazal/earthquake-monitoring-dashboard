@@ -2,9 +2,16 @@
 
 A data dashboard application built with Streamlit to explore global earthquake patterns through interactive visualizations, supported by a lightweight ETL pipeline using the USGS API and SQLite.
 
+
 ## 🎯 Project Goal
 
 Demonstrate the development of an end-to-end analytics dashboard, from data ingestion and storage to exploratory analysis and interactive visualization of global earthquake activity.
+
+
+## 🚀 Live Application
+
+The dashboard is deployed and accessible online:
+👉 **[Launch Earthquake Monitoring Dashboard](https://earthquake-monitoring-dashboard.streamlit.app/)**
 
 
 ## 📷 Dashboard Preview
