@@ -99,13 +99,13 @@ def render_earthquake_map(dff, view_mode, latest):
         pitch=60 if view_mode in ["Hexagon", "3D Scatter"] else 0,
     )
 
-    tooltip = {
+    tooltip = None if view_mode == "Hexagon" else {
         "html": """
             <b>Magnitude:</b> {magnitude_fmt}<br/>
             <b>Depth:</b> {depth_fmt} km<br/>
             <b>Location:</b> {place}<br/>
             <b>Time (UTC):</b> {time_fmt}
-            """,
+        """,
         "style": {"backgroundColor": "black", "color": "white"}
     }
 

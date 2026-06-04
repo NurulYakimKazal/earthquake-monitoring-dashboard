@@ -54,6 +54,21 @@ def render_dataset_summary(dff):
         st.metric("Avg Depth (km)", f"{dff['depth'].mean():.2f}")
 
 
+def render_ml_clustering_summary(summary):
+    st.subheader("Earthquake Cluster Analysis & Visualization")
+
+    col1, col2, col3 = st.columns(3, border=True)
+
+    with col1:
+        st.metric("Detected Clusters", summary["num_clusters"])
+
+    with col2:
+        st.metric("Noise (Unclustered)", f"{summary['noise_ratio']:.1%}")
+
+    with col3:
+        st.metric("Max Cluster Size", summary["largest_cluster"])
+
+
 def render_summary(latest_data, earliest, latest_time, dff):
     with st.container(border=True):
         col1, col2 = st.columns([1, 2])

@@ -13,6 +13,7 @@ from components.kpis import render_summary
 from components.map_tab import render_earthquake_map
 from components.analytics_tab import render_trends
 from components.catalog_tab import render_live_feed, render_catalog
+from components.ml_clustering_tab import render_ml_earthquake_map
 
 
 # -----------------------------
@@ -98,8 +99,13 @@ st.write("")
 # -----------------------------
 # TABS
 # -----------------------------
-tab_map, tab_analytics, tab_catalog = st.tabs(
-    ["🌍 Map", "📈 Analytics", "📍 Catalog"]
+tab_map, tab_analytics, tab_ml_clustering, tab_catalog = st.tabs(
+    [
+        "🌍 Map",
+        "📈 Analytics",
+        "🧠 ML Clustering",
+        "📍 Catalog",
+    ]
 )
 
 
@@ -116,6 +122,14 @@ with tab_map:
 with tab_analytics:
     st.write("")
     render_trends(dff)
+
+
+# -----------------------------
+# ML Clustering
+# -----------------------------
+with tab_ml_clustering:
+    st.write("")
+    render_ml_earthquake_map(dff)
 
 # -----------------------------
 # CATALOG
