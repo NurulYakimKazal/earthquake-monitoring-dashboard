@@ -1,29 +1,35 @@
-# 🌍 Earthquake Data Dashboard (USGS + Streamlit + SQLite)
+# 🌍 Earthquake Data Dashboard (USGS + Streamlit + SQLite + ML Clustering)
 
-A data dashboard application built with Streamlit to explore global earthquake patterns through interactive visualizations, supported by a lightweight ETL pipeline using the USGS API and SQLite.
+A data dashboard application built with Streamlit to explore global earthquake patterns through interactive visualizations, supported by a lightweight ETL pipeline using the USGS API and SQLite. The project also includes machine learning-based spatial clustering (DBSCAN & HDBSCAN) to identify seismic activity patterns.
 
+---
 
 ## 🎯 Project Goal
 
-Demonstrate the development of an end-to-end analytics dashboard, from data ingestion and storage to exploratory analysis and interactive visualization of global earthquake activity.
+Demonstrate the development of an end-to-end analytics dashboard, from data ingestion and storage to exploratory analysis, machine learning clustering, and interactive visualization of global earthquake activity.
 
+---
 
 ## 🚀 Live Application
 
 The dashboard is deployed and accessible online:
 👉 **[Launch Earthquake Monitoring Dashboard](https://earthquake-monitoring-dashboard.streamlit.app/)**
 
+---
 
 ## 📷 Dashboard Preview
 
 ### Overview (Map & KPIs)
-![Map & KPIs](assets/streamlit_dashboard_1.png)
+![Map & KPIs](assets/streamlit_dashboard1.png)
 
 ### Analytics
-![Analytics](assets/streamlit_dashboard_2.png)
+![Analytics](assets/streamlit_dashboard2.png)
+
+### ML Clustering
+![ML Clustering](assets/streamlit_dashboard3.png)
 
 ### Catalog
-![Catalog](assets/streamlit_dashboard_3.png)
+![Catalog](assets/streamlit_dashboard4.png)
 ---
 
 ## 📊 Overview
@@ -33,9 +39,33 @@ The dashboard is deployed and accessible online:
 * Uses watermark logic to prevent duplicate ingestion
 * Supports historical backfill and incremental updates
 * Cleans and validates incoming data
-* Performs exploratory time-series analysis, including event frequency, magnitude trends, and 7-day rolling averages
-* Analyzes magnitude and depth distributions to identify earthquake patterns
-* Visualizes results using Streamlit
+* Performs exploratory time-series analysis (event frequency, magnitude trends, rolling averages)
+* Analyzes magnitude and depth distributions to identify seismic patterns
+* Applies ML clustering (DBSCAN & HDBSCAN) to detect spatial earthquake groupings
+* Visualizes results using Streamlit and PyDeck
+
+---
+
+## 🧠 Machine Learning (Clustering)
+
+The dashboard includes unsupervised clustering to identify earthquake spatial patterns.
+
+### Algorithms
+- DBSCAN (Density-Based Spatial Clustering)
+- HDBSCAN (Hierarchical Density-Based Clustering)
+
+### Key Details
+- Clustering is based **only on latitude and longitude**
+- Distance metric: **Haversine (geographic distance)**
+- Magnitude and depth are used only for visualization, not clustering
+- Noise points are labeled as `-1`
+
+### Controls
+- Switch between DBSCAN and HDBSCAN
+- Tune parameters:
+  - DBSCAN: `eps (km)`, `min_samples`
+  - HDBSCAN: `min_cluster_size`, `min_samples`
+- Toggle noise visibility
 
 ---
 
@@ -53,6 +83,12 @@ SQLite Database (earthquake.db)
     │
     ▼
 Streamlit Dashboard
+    │
+    ▼
+ML Clustering Layer (DBSCAN / HDBSCAN)
+    │
+    ▼
+Interactive Visualization (PyDeck Map)
 ```
 
 ---
@@ -63,8 +99,12 @@ Streamlit Dashboard
 * Streamlit
 * SQLite
 * Pandas
-* Requests
+* NumPy
+* Scikit-learn
+* HDBSCAN
+* PyDeck
 * Altair
+* Requests
 
 ---
 
@@ -76,13 +116,17 @@ StreamlitEarthquakeDashboard/
 │   └── streamlit_dashboard_1.png
 │   └── streamlit_dashboard_2.png
 │   └── streamlit_dashboard_3.png
+│   └── streamlit_dashboard_4.png
+│
 ├── components/
 │   ├── analytics_tab.py
 │   ├── catalog_tab.py
-│   ├── map_tab.py
-│   ├── sidebar.py
 │   ├── kpis.py
-│   └── plots.py
+│   ├── map_tab.py
+│   ├── ml_clustering_tab.py
+│   ├── ml_filters.py
+│   ├── plots.py
+│   └── sidebar.py
 │
 ├── data/
 │   └── earthquake.db
@@ -93,7 +137,8 @@ StreamlitEarthquakeDashboard/
 │   ├── data_processing.py
 │   ├── earthquake_filtering.py
 │   ├── init_db_and_sync.py
-│   └── init_ui_state.py
+│   ├── init_ui_state.py
+│   └── ml_data_processing.py
 │
 ├── scripts/
 │   └── run_backfill.py
@@ -116,25 +161,27 @@ StreamlitEarthquakeDashboard/
 
 ## 🧹 Data Handling Steps
 
-* Fetch earthquake data from the USGS API (GeoJSON format)
-* Filter out records with missing magnitude values
+* Fetch earthquake data from USGS API (GeoJSON format)
+* Filter invalid or missing magnitude records
 * Convert and validate numeric fields (magnitude, coordinates, depth)
 * Normalize timestamps for consistent storage
 * Prevent duplicates using `INSERT OR IGNORE`
 * Use watermark (latest timestamp) for incremental ingestion
-* Maintain data consistency across repeated runs
+* Ensure clean structured dataset for analytics + ML
 
 ---
 
 ## 📈 Dashboard Features
 
 * Latest earthquake summary and seismic activity coverage
-* Interactive map visualization of earthquake events
+* Interactive PyDeck map visualization of earthquake events
+* ML-based cluster visualization (DBSCAN/HDBSCAN)
 * Event frequency trends over time
 * Magnitude trends and 7-day rolling average analysis
 * Magnitude and depth distribution analysis
 * Interactive filtering by magnitude, depth, and map type
-* Detailed tooltips displaying location, magnitude, depth, and timestamp
+* Tooltips with detailed event information
+* Noise detection and filtering (cluster = -1)
 * Clean and responsive Streamlit interface
 
 ---
@@ -181,4 +228,6 @@ streamlit run app.py
 
 **Nurul Yakim Kazal**
 
-Dashboard Developer specializing in Streamlit, Dash, and R Shiny applications. Experienced in combining data engineering and analytical workflows to build end-to-end interactive data products.
+Data and analytics developer focused on building end-to-end data applications that combine data engineering, machine learning, and interactive visualization. I specialize in developing production-ready dashboards using Streamlit, and also have experience building interactive applications with Dash.
+
+My work involves designing ETL pipelines, processing and transforming data, and creating intuitive user interfaces that make data exploration and analysis more accessible and effective.
