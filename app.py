@@ -67,26 +67,34 @@ init_ui_state()
 # ----------------------------------------
 # GENERATE SIDEBAR FILTERS (GLOBAL)
 # ----------------------------------------
-sidebar_result = sidebar()
+sidebar_result = sidebar(stats)
 
 view_mode = sidebar_result['view_mode']
 max_depth = sidebar_result['max_depth']
 mag_min = sidebar_result['mag_min']
 mag_max = sidebar_result['mag_max']
 
+start_time = sidebar_result['start_time']
+end_time = sidebar_result['end_time']
+
 
 # ----------------------------------------
 # FILTERS DATAFRAME
 # ----------------------------------------
-result = filter_earthquakes(df, mag_min, mag_max, max_depth)
+dff = filter_earthquakes(
+    df,
+    mag_min,
+    mag_max,
+    max_depth,
+    start_time,
+    end_time
+)
 
-dff = result["filtered"]
-latest = result["latest"]
-is_empty = result["empty"]
-
-if is_empty:
+if dff.empty:
     st.warning("No earthquakes match the selected filters.")
     st.stop()
+
+latest = dff.head(1)
 
 
 # -----------------------------

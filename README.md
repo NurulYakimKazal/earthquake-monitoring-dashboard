@@ -20,16 +20,16 @@ The dashboard is deployed and accessible online:
 ## 📷 Dashboard Preview
 
 ### Overview (Map & KPIs)
-![Map & KPIs](assets/streamlit_dashboard1.png)
+![Map & KPIs](assets/map_tab.png)
 
 ### Analytics
-![Analytics](assets/streamlit_dashboard2.png)
+![Analytics](assets/analytics_tab.png)
 
 ### ML Clustering
-![ML Clustering](assets/streamlit_dashboard3.png)
+![ML Clustering](assets/ml_tab.png)
 
 ### Catalog
-![Catalog](assets/streamlit_dashboard4.png)
+![Catalog](assets/catalog_tab.png)
 ---
 
 ## 📊 Overview
@@ -72,23 +72,43 @@ The dashboard includes unsupervised clustering to identify earthquake spatial pa
 ## 🏗️ Architecture
 
 ```text
-USGS API
-    │
-    ▼
-ETL Process
-(Backfill + Incremental Updates)
-    │
-    ▼
-SQLite Database (earthquake.db)
-    │
-    ▼
-Streamlit Dashboard
-    │
-    ▼
-ML Clustering Layer (DBSCAN / HDBSCAN)
-    │
-    ▼
-Interactive Visualization (PyDeck Map)
+                USGS API
+                    │
+                    ▼
+        ETL Pipeline (Backfill + Incremental)
+                    │
+                    ▼
+            SQLite Database
+             (earthquake.db)
+                    │
+        ┌───────────┼───────────┐
+        ▼           ▼
+ Data Catalog   Filter Engine
+ (raw table)    (user filters)
+        │           │
+        │           ▼
+        │    Filtered Dataset (shared input)
+        │           │
+        │     ┌─────┼─────┐
+        │     ▼           ▼
+        │  Analytics   ML Clustering
+        │ (stats,      (DBSCAN /
+        │ summaries)    HDBSCAN)
+        │     │           │
+        └─────┴─────┬─────┘
+                    ▼
+            Streamlit Dashboard Layer
+        (state + UI + view routing)
+                      │
+     ┌────────────────┼────────────────┐
+     ▼                ▼                ▼
+ PyDeck Map        Charts         Data Table
+(spatial view)   (distributions,   (RAW ONLY)
+                time series)
+                      │
+                      ▼
+        Linked Interactive Visualization
+ (all views react to filters, clustering optional overlay)
 ```
 
 ---
@@ -179,7 +199,7 @@ StreamlitEarthquakeDashboard/
 * Event frequency trends over time
 * Magnitude trends and 7-day rolling average analysis
 * Magnitude and depth distribution analysis
-* Interactive filtering by magnitude, depth, and map type
+* Interactive filtering by map type, magnitude, depth, and time
 * Tooltips with detailed event information
 * Noise detection and filtering (cluster = -1)
 * Clean and responsive Streamlit interface

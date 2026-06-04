@@ -18,7 +18,7 @@ def _prepare_coords(df: pd.DataFrame):
 # =========================
 # DBSCAN CLUSTERING (CACHED)
 # =========================
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=True)
 def run_dbscan(
     df: pd.DataFrame,
     eps_km: float = 30,
@@ -53,7 +53,7 @@ def run_dbscan(
 # =========================
 # HDBSCAN CLUSTERING (CACHED)
 # =========================
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=True)
 def run_hdbscan(
     df: pd.DataFrame,
     min_cluster_size: int = 8,

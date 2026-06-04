@@ -1,4 +1,5 @@
 import streamlit as st
+from datetime import datetime, timedelta
 
 
 def init_ui_state():
@@ -9,6 +10,14 @@ def init_ui_state():
         "view_mode": "Scatter",
         "mag_range": (3, 7.5),
         "max_depth": 300,
+
+        # =========================
+        # TIME FILTER UI
+        # =========================
+        "time_range": (
+            (datetime.now() - timedelta(days=30)).date(),
+            datetime.now().date()
+        ),
 
         # =========================
         # ML UI
