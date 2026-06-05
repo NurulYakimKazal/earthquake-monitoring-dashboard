@@ -17,13 +17,18 @@ def render_earthquake_map(dff, view_mode, latest):
 
     dff = dff.copy()
 
-    # feature engineering (acceptable in UI layer for Streamlit apps)
-    dff["radius"] = (dff["magnitude"] ** 2 * 2000).clip(lower=10000)
+    # =========================
+    # FEATURE ENGINEERING
+    # =========================
+    dff["radius"] = (dff["magnitude"] ** 2 * 4000).clip(lower=20000)
     dff["elevation"] = dff["magnitude"] * 10000
     dff["mag_rgb"] = dff["magnitude"].apply(magnitude_color)
 
     layers = []
 
+    # =========================
+    # MODES
+    # =========================
     if view_mode == "Heatmap":
         layers.append(
             pdk.Layer(
@@ -64,18 +69,38 @@ def render_earthquake_map(dff, view_mode, latest):
         )
 
     else:
+        # =========================
+        # SCATTER (FIXED VISUAL SEPARATION)
+        # =========================
         layers.append(
             pdk.Layer(
                 "ScatterplotLayer",
                 data=dff,
                 get_position=["longitude", "latitude"],
                 get_fill_color="mag_rgb",
+
+                # size stays simple but readable
                 get_radius="radius",
-                opacity=0.75,
+
+                # IMPORTANT FIX
+                opacity=0.6,
+                filled=True,
+
+                # CRITICAL VISUAL SEPARATION
+                stroked=True,
+                get_line_color=[0, 0, 0],
+                line_width_min_pixels=1,
+
+                # interaction
                 pickable=True,
+                auto_highlight=True,
+                highlight_color=[255, 255, 255, 0],
             )
         )
 
+    # =========================
+    # LATEST EARTHQUAKE
+    # =========================
     if view_mode == "Scatter":
         layers.append(
             pdk.Layer(
@@ -83,15 +108,24 @@ def render_earthquake_map(dff, view_mode, latest):
                 data=latest,
                 get_position=["longitude", "latitude"],
                 get_fill_color=[255, 255, 255],
-                get_radius=max(
-                    latest["magnitude"].iloc[0] * 25000 * 3,
-                    10000
-                ),
-                opacity=1,
+
+                radius_units="meters",
+                get_radius=max(latest["magnitude"].iloc[0] * 2, 6),
+
+                opacity=0.9,
+
+                stroked=True,
+                get_line_color=[0, 0, 0],
+                line_width_min_pixels=1,
+
+                filled=True,
                 pickable=True,
             )
         )
 
+    # =========================
+    # VIEW STATE
+    # =========================
     view_state = pdk.ViewState(
         latitude=dff["latitude"].mean(),
         longitude=dff["longitude"].mean(),
@@ -99,6 +133,9 @@ def render_earthquake_map(dff, view_mode, latest):
         pitch=60 if view_mode in ["Hexagon", "3D Scatter"] else 0,
     )
 
+    # =========================
+    # TOOLTIP
+    # =========================
     tooltip = None if view_mode == "Hexagon" else {
         "html": """
             <b>Magnitude:</b> {magnitude_fmt}<br/>
@@ -106,7 +143,10 @@ def render_earthquake_map(dff, view_mode, latest):
             <b>Location:</b> {place}<br/>
             <b>Time (UTC):</b> {time_fmt}
         """,
-        "style": {"backgroundColor": "black", "color": "white"}
+        "style": {
+            "backgroundColor": "#111827",
+            "color": "white"
+        }
     }
 
     deck = pdk.Deck(
@@ -116,4 +156,4 @@ def render_earthquake_map(dff, view_mode, latest):
         tooltip=tooltip,
     )
 
-    st.pydeck_chart(deck, width='stretch')
+    st.pydeck_chart(deck, width="stretch")
