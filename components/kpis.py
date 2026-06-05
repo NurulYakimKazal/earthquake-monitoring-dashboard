@@ -36,13 +36,13 @@ def render_dataset_summary(dff):
         st.metric("Total Events", len(dff))
 
     with col2:
-        st.metric("Max Mag", f"{dff['magnitude'].max():.2f}")
+        st.metric("Max Mag", f"{dff['magnitude'].max():.1f}")
 
     with col3:
-        st.metric("Avg Mag", f"{dff['magnitude'].mean():.2f}")
+        st.metric("Avg Mag", f"{dff['magnitude'].mean():.1f}")
 
     with col4:
-        st.metric("Max Depth (km)", f"{dff['depth'].max():.2f}")
+        st.metric("Max Depth (km)", f"{dff['depth'].max():.1f}")
 
     with col5:
         st.metric("Depth < 70 km", f"{(dff["depth"] < 70).mean() * 100:.1f}%")
