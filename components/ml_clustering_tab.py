@@ -119,7 +119,7 @@ def render_ml_earthquake_map(dff):
         radius_max_pixels=6,
         opacity=0.7,
         stroked=True,
-        get_line_color=[255, 255, 255],
+        get_line_color=[0, 0, 0],
         line_width_min_pixels=1.5,
         filled=True,
         pickable=True,
