@@ -30,7 +30,7 @@ def render_time_coverage(earliest, latest_time):
 def render_dataset_summary(dff):
     st.subheader("Seismic Data Summary")
 
-    col1, col2, col3, col4, col5, col6, col7 = st.columns(7, border=True)
+    col1, col2, col3, col4, col5, = st.columns(5, border=True)
 
     with col1:
         st.metric("Total Events", len(dff))
@@ -39,19 +39,14 @@ def render_dataset_summary(dff):
         st.metric("Max Mag", f"{dff['magnitude'].max():.2f}")
 
     with col3:
-        st.metric("Min Mag", f"{dff['magnitude'].min():.2f}")
-
-    with col4:
         st.metric("Avg Mag", f"{dff['magnitude'].mean():.2f}")
 
-    with col5:
+    with col4:
         st.metric("Max Depth (km)", f"{dff['depth'].max():.2f}")
 
-    with col6:
-        st.metric("Min Depth (km)", f"{dff['depth'].min():.2f}")
+    with col5:
+        st.metric("Depth < 70 km", f"{(dff["depth"] < 70).mean() * 100:.1f}%")
 
-    with col7:
-        st.metric("Avg Depth (km)", f"{dff['depth'].mean():.2f}")
 
 
 def render_ml_clustering_summary(summary):
@@ -81,4 +76,3 @@ def render_summary(latest_data, earliest, latest_time, dff):
 
         st.write("")
         render_dataset_summary(dff)
-

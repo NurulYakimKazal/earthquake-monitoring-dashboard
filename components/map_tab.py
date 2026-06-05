@@ -110,7 +110,7 @@ def render_earthquake_map(dff, view_mode, latest):
                 get_fill_color=[255, 255, 255],
 
                 radius_units="meters",
-                get_radius=max(latest["magnitude"].iloc[0] * 2, 6),
+                get_radius=max(latest["magnitude"].iloc[0] * 0.8, 3),
 
                 opacity=0.9,
 
