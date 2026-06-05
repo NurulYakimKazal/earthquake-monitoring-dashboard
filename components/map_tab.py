@@ -89,7 +89,7 @@ def render_earthquake_map(dff, view_mode, latest):
                 # CRITICAL VISUAL SEPARATION
                 stroked=True,
                 get_line_color=[0, 0, 0],
-                line_width_min_pixels=1,
+                line_width_min_pixels=0.6,
 
                 # interaction
                 pickable=True,
@@ -116,7 +116,7 @@ def render_earthquake_map(dff, view_mode, latest):
 
                 stroked=True,
                 get_line_color=[0, 0, 0],
-                line_width_min_pixels=1,
+                line_width_min_pixels=0.6,
 
                 filled=True,
                 pickable=True,
