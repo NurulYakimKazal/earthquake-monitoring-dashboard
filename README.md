@@ -229,8 +229,8 @@ streamlit run app.py
 
 ## 👤 Author
 
-**Nurul Yakim Kazal**
-Mathematics Department, Universitas Sam Ratulangi
+**Nurul Yakim Kazal**  
+Lecturer, Department of Mathematics, Universitas Sam Ratulangi
 
 Focus areas:
 * Numerical Linear Algebra (academic)
