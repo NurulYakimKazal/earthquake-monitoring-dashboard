@@ -1,8 +1,8 @@
 # 🌍 Earthquake Monitoring & Analytics Platform
 
-A multi-layer interactive dashboard for real-time earthquake monitoring, geospatial visualization, time-series analysis, and unsupervised machine learning clustering.
+A real-time, multi-layer earthquake analytics system for geospatial visualization, time-series analysis, statistical exploration, and unsupervised machine learning.
 
-Built with Streamlit, this project transforms raw seismic event data into structured analytical insights through visualization, statistical exploration, and clustering-based pattern discovery.
+The system transforms raw seismic events into structured insights through an end-to-end pipeline including data ingestion, storage, processing, analytics, and interactive visualization.
 
 ---
 
@@ -15,39 +15,41 @@ The dashboard is deployed and accessible online:
 
 ## 🧭 Project Overview
 
-This platform is designed as an end-to-end earthquake analytics system that integrates:
+This platform is an end-to-end earthquake analytics system that integrates:
 
-* Real-time seismic event monitoring
-* Geospatial visualization of global earthquakes
-* Time-series trend analysis and rolling statistics
+* Real-time seismic event monitoring (USGS API)
+* Geospatial mapping of global earthquakes
+* Time-series analysis of seismic activity
 * Statistical distribution analysis (magnitude & depth)
-* Unsupervised machine learning for spatial clustering
+* Unsupervised clustering for spatial pattern discovery
 
-It supports both operational monitoring (live activity) and exploratory data analysis (patterns & structure).
+It supports both operational monitoring and exploratory data analysis.
 
 ---
 
 ## 🏗️ System Architecture
 
-The dashboard is structured into four analytical layers:
-### 🌍 1. Observation Layer (What is happening?)
-* Interactive global earthquake map
-* Live earthquake activity feed
-* Magnitude-based event highlighting
-### 📊 2. Temporal Analysis Layer (How is it evolving?)
-* Earthquake frequency over time
-* Magnitude trends
-* 7-day rolling average magnitude
-### 📈 3. Statistical Analysis Layer (What are the characteristics?)
-* Magnitude distribution
-* Depth distribution
-* Event-level exploration
-### 🧠 4. Exploration Layer (What hidden structure exists?)
-* DBSCAN clustering
-* HDBSCAN clustering
-* Interactive parameter tuning for spatial pattern discovery
+This system follows a layered analytical approach:
+```text
+Raw seismic events
+   │
+   ▼
+Structured data
+   │
+   ▼
+Statistical insights
+   │
+   ▼
+Machine learning patterns
+```
+It separates three analytical perspectives:
 
-### 🧠 Architecture Flow
+* What is happening (live monitoring & map)
+* How it evolves (time-series analysis)
+* What patterns exist (clustering & statistics)
+
+---
+## 🔄 Data Pipeline Architecture
 ```text
 USGS API
    │
@@ -101,6 +103,30 @@ Interactive Linked Visualization System
 
 ---
 
+## 🧰 Tech Stack
+
+* Python
+* Streamlit
+* Pandas
+* NumPy
+* Altair
+* PyDeck
+* Scikit-learn
+* HDBSCAN
+* SQLite
+* Requests (USGS API)
+
+---
+## 🧹 Data Engineering Pipeline
+* Ingests real-time earthquake data from USGS (GeoJSON)
+* Cleans and validates seismic records 
+* Normalizes timestamps for consistency 
+* Prevents duplicates using database constraints 
+* Supports incremental ingestion (watermark-based updates)
+* Stores structured data in SQLite
+
+---
+
 ## 🧠 Machine Learning Details
 
 * Clustering uses only latitude & longitude
@@ -113,41 +139,22 @@ Interactive Linked Visualization System
 * Tune parameters (eps, min_samples, cluster size)
 * Toggle noise visibility
 
-## 🧰 Tech Stack
-
-* Python
-* Streamlit
-* Pandas
-* NumPy
-* Altair
-* PyDeck
-* Scikit-learn
-* HDBSCAN
-* SQLite
-* Requests
-
 ---
-## 🧹 Data Pipeline
-* Fetches earthquake data from USGS API (GeoJSON)
-* Cleans missing/invalid magnitude values
-* Normalizes timestamps
-* Prevents duplicates using database constraints
-* Uses incremental ingestion (watermark-based updates)
-* Stores structured data in SQLite
-
----
-## 🗄️ Database Schema
-
-```sql
-CREATE TABLE earthquakes (
-    id TEXT PRIMARY KEY,
-    magnitude REAL,
-    place TEXT,
-    time INTEGER,
-    longitude REAL,
-    latitude REAL,
-    depth REAL
-);
+## 📁 Project Structure
+```text
+StreamlitEarthquakeDashboard/
+├── assets/                 # dashboard screenshots
+├── components/             # Streamlit UI components
+├── data/                   # SQLite database
+├── modules/                # data processing & feature engineering
+├── scripts/                # batch jobs (backfill)
+├── src/                    # ETL + database layer
+│   ├── archived/
+│   ├── db/
+│   └── etl/
+├── app.py                  # main Streamlit app
+├── requirements.txt
+└── README.md
 ```
 
 ---
@@ -172,25 +179,6 @@ It separates three analytical perspectives:
 * What is happening (live feed, map)
 * How it evolves (time-series analysis)
 * What patterns exist (clustering & statistics)
-
----
-
-## 📁 Project Structure
-```text
-StreamlitEarthquakeDashboard/
-├── assets/                 # dashboard screenshots
-├── components/             # Streamlit UI components
-├── data/                   # SQLite database
-├── modules/                # data processing & feature engineering
-├── scripts/                # batch jobs (backfill)
-├── src/                    # ETL + database layer
-│   ├── archived/
-│   ├── db/
-│   └── etl/
-├── app.py                  # main Streamlit app
-├── requirements.txt
-└── README.md
-```
 
 ---
 
@@ -242,10 +230,15 @@ streamlit run app.py
 ## 👤 Author
 
 **Nurul Yakim Kazal**
+Mathematics Department, Universitas Sam Ratulangi
 
-Data and analytics developer focused on building end-to-end analytical systems that combine data engineering, machine learning, and interactive visualization.
+Focus areas:
+* Numerical Linear Algebra (academic)
+* Data engineering & ETL systems
+* Interactive analytics dashboards (Streamlit / Dash)
+* Geospatial & time-series analytics
 
 ---
 ## 🚀 Final Note
 
-This project demonstrates an end-to-end analytical system design, integrating data ingestion, storage, transformation, visualization, and machine learning into a single interactive platform for exploring global earthquake activity.
+This project demonstrates an end-to-end analytical system that integrates data engineering, real-time monitoring, statistical analysis, and machine learning into a unified interactive dashboard for exploring global earthquake activity.
