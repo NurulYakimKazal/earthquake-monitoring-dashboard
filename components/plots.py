@@ -26,26 +26,6 @@ def render_frequency_chart(df_trend):
     return line + points
 
 
-def render_magnitude_over_time(df_trend):
-    return alt.Chart(df_trend).mark_circle(
-        size=40,
-        opacity=0.99
-    ).encode(
-        x=alt.X("time:T", title="Date", axis=alt.Axis(format="%Y/%m/%d", tickCount="week")),
-        y=alt.Y("magnitude:Q", title="Magnitude"),
-        color=alt.Color(
-            "magnitude:Q",
-            scale=alt.Scale(scheme="viridis"),
-            title="Magnitude"
-        ),
-        tooltip=[
-            alt.Tooltip("time:T", title="Event Time", format="%Y-%m-%d %H:%M:%S"),
-            alt.Tooltip("magnitude:Q", title="Magnitude", format=".1f"),
-            alt.Tooltip("place:N", title="Location")
-        ]
-    ).properties(title="Magnitude Over Time")
-
-
 def render_rolling_average(df_trend):
     df_sorted = df_trend.sort_values("datetime").copy()
     df_sorted = df_sorted.set_index("datetime")
@@ -65,6 +45,26 @@ def render_rolling_average(df_trend):
             alt.Tooltip("place:N", title="Location")
         ]
     ).properties(title="7-Day Rolling Average Magnitude")
+
+
+def render_magnitude_over_time(df_trend):
+    return alt.Chart(df_trend).mark_circle(
+        size=40,
+        opacity=0.99
+    ).encode(
+        x=alt.X("time:T", title="Date", axis=alt.Axis(format="%Y/%m/%d", tickCount="week")),
+        y=alt.Y("magnitude:Q", title="Magnitude"),
+        color=alt.Color(
+            "magnitude:Q",
+            scale=alt.Scale(scheme="viridis"),
+            title="Magnitude"
+        ),
+        tooltip=[
+            alt.Tooltip("time:T", title="Event Time", format="%Y-%m-%d %H:%M:%S"),
+            alt.Tooltip("magnitude:Q", title="Magnitude", format=".1f"),
+            alt.Tooltip("place:N", title="Location")
+        ]
+    ).properties(title="Magnitude Over Time")
 
 
 def render_depth_distribution(df_trend):
