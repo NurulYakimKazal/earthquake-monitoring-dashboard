@@ -1,8 +1,23 @@
 import streamlit as st
-from datetime import datetime, timedelta
 
 
-def init_ui_state():
+def init_ui_state(stats):
+
+    earliest = stats["earliest"].date()
+    latest_time = stats["latest_time"].date()
+
+    # ensure existing state is valid BEFORE defaults
+    if "time_range" in st.session_state:
+        start, end = st.session_state["time_range"]
+
+        start = max(start, earliest)
+        end = min(end, latest_time)
+
+        if start > end:
+            start, end = earliest, latest_time
+
+        st.session_state["time_range"] = (start, end)
+
     defaults = {
         # =========================
         # MAP UI
@@ -15,8 +30,8 @@ def init_ui_state():
         # TIME FILTER UI
         # =========================
         "time_range": (
-            (datetime.now() - timedelta(days=30)).date(),
-            datetime.now().date()
+            earliest,
+            latest_time
         ),
 
         # =========================

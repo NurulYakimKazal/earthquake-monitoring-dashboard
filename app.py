@@ -61,7 +61,7 @@ latest_data = stats["latest_data"]
 earliest = stats["earliest"]
 latest_time = stats["latest_time"]
 
-init_ui_state()
+init_ui_state(stats)
 
 
 # ----------------------------------------
