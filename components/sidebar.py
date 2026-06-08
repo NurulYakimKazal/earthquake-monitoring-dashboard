@@ -39,7 +39,7 @@ def sidebar(stats):
     max_date = latest_time.date()
 
     time_range = st.sidebar.date_input(
-        "Date range",
+        "Date range (Only full range applied)",
         min_value=min_date,
         max_value=max_date,
         key="time_range"

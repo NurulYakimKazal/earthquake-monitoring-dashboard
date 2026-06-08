@@ -74,4 +74,3 @@ def ml_controls():
                 "eps_km": eps_km,
                 "min_samples": min_samples
             }
-

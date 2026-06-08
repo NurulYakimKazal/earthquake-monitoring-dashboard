@@ -12,11 +12,6 @@ from components.kpis import render_ml_clustering_summary
 
 def render_ml_earthquake_map(dff):
 
-    # =========================
-    # UI CONTROLS
-    # =========================
-    params = ml_controls()
-
     st.caption(
         "Clustering uses latitude and longitude only (haversine distance). "
         "Magnitude and depth are shown for context but are not used in the model."
@@ -34,6 +29,18 @@ def render_ml_earthquake_map(dff):
         st.warning("No valid coordinate data available.")
         return
 
+    n = len(dff)
+
+    if n < 2:
+        st.warning("Not enough points for clustering.")
+        return
+
+    # =========================
+    # UI CONTROLS
+    # =========================
+    params = ml_controls()
+
+
     # =========================
     # CLUSTERING
     # =========================
@@ -41,13 +48,14 @@ def render_ml_earthquake_map(dff):
         dff = run_dbscan(
             dff,
             eps_km=params["eps_km"],
-            min_samples=params["min_samples"],
+            min_samples=min(params["min_samples"], n),
         )
+
     else:
         dff = run_hdbscan(
             dff,
-            min_cluster_size=params["min_cluster_size"],
-            min_samples=params["min_samples"],
+            min_cluster_size=min(params["min_cluster_size"], n),
+            min_samples=min(params["min_samples"], n),
         )
 
     if "cluster" not in dff.columns or dff["cluster"].isna().all():
