@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from components.plots import (
+from modules.plots import (
     render_frequency_chart,
     render_magnitude_over_time,
     render_rolling_average,

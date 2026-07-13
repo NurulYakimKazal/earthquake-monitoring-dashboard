@@ -48,8 +48,17 @@ def sidebar(stats):
     # SAFE PARSING
     if isinstance(time_range, tuple) and len(time_range) == 2:
         start_date, end_date = time_range
+
+        # Save the last complete range
+        st.session_state["last_valid_date_range"] = (
+            start_date,
+            end_date,
+        )
     else:
-        start_date, end_date = min_date, max_date
+        start_date, end_date = st.session_state.get(
+            "last_valid_date_range",
+            (min_date, max_date),
+        )
 
     start_time = datetime.combine(start_date, datetime.min.time())
     end_time = datetime.combine(end_date, datetime.max.time())
