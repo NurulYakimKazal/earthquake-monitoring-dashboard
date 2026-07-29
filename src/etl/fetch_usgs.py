@@ -2,7 +2,6 @@ import requests
 from datetime import datetime, timezone
 import pandas as pd
 import logging
-import streamlit as st
 
 from src.db.database import (
     create_tables,
@@ -71,17 +70,6 @@ def run_etl():
     create_tables()
 
     latest_time = get_latest_time()
-
-    st.write("Latest time (ms):", latest_time)
-
-    if latest_time:
-        st.write(
-            "Latest time (UTC):",
-            datetime.fromtimestamp(
-                latest_time / 1000,
-                tz=timezone.utc
-            )
-        )
 
     features = fetch_usgs_data(latest_time)
 
