@@ -26,12 +26,8 @@ def build_starttime(latest_time_ms: int) -> str:
     """
 
     if latest_time_ms == 0:
-        return "2025-01-01T00:00:00"
+        return "2025-01-01T00:00:00Z"
 
-    # -----------------------------
-    # OVERLAP WINDOW (5 minutes)
-    # prevents missing late-arriving USGS events
-    # -----------------------------
     overlap_ms = 5 * 60 * 1000
     safe_time = max(0, latest_time_ms - overlap_ms)
 
@@ -40,7 +36,7 @@ def build_starttime(latest_time_ms: int) -> str:
         tz=timezone.utc
     )
 
-    return dt.isoformat()
+    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 # -----------------------------
