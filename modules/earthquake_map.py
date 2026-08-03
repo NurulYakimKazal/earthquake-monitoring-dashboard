@@ -179,7 +179,7 @@ def render_earthquake_map(filtered_dff, unfiltered_dff):
                 lon=0,
             ),
         ),
-        height=900,
+        height=700,
         margin=dict(
             t=0,
             l=0,
