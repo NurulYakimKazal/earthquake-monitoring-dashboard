@@ -113,7 +113,7 @@ def render_ml_cluster_map(dff, show_noise):
     fig.update_layout(
         map=dict(
             style="carto-darkmatter",
-            zoom=1.5,
+            zoom=1.47,
             center=dict(
                 lat=0,
                 lon=0,
