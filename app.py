@@ -24,11 +24,11 @@ init_db_and_sync(create_tables, run_etl)
 # -----------------------------
 df = get_clean_earthquake_data()
 
-st.session_state.unfiltered_df = df
-
 if df is None:
     st.warning("No earthquake data available.")
     st.stop()
+
+st.session_state.unfiltered_df = df
 
 stats = compute_global_stats(df)
 
