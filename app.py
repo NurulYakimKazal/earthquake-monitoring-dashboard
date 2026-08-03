@@ -77,17 +77,17 @@ pg = st.navigation(
         st.Page(
             "pages/analytics.py",
             title="Analytics",
-            icon=":material/analytics:",
+            icon=":material/query_stats:",
         ),
         st.Page(
             "pages/ml_clustering.py",
             title="ML Clustering",
-            icon=":material/analytics:",
+            icon=":material/hub:",
         ),
         st.Page(
             "pages/catalog.py",
             title="Live Feed & Catalog",
-            icon=":material/analytics:",
+            icon=":material/public:",
         )
     ]
 )

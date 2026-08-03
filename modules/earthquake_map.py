@@ -173,13 +173,13 @@ def render_earthquake_map(filtered_dff, unfiltered_dff):
     fig.update_layout(
         map=dict(
             style="carto-darkmatter",
-            zoom=0.8,
+            zoom=2,
             center=dict(
                 lat=0,
-                lon=0
-            )
+                lon=0,
+            ),
         ),
-        height=600,
+        height=900,
         margin=dict(
             t=0,
             l=0,
@@ -189,6 +189,5 @@ def render_earthquake_map(filtered_dff, unfiltered_dff):
         showlegend=False,
         uirevision="earthquake"
     )
-
 
     return fig

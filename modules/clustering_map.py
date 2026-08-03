@@ -113,18 +113,18 @@ def render_ml_cluster_map(dff, show_noise):
     fig.update_layout(
         map=dict(
             style="carto-darkmatter",
-            zoom=0.8,
+            zoom=2,
             center=dict(
                 lat=0,
-                lon=0
-            )
+                lon=0,
+            ),
         ),
-        height=500,
+        height=900,
         margin=dict(
             t=0,
             l=0,
             r=0,
-            b=0,
+            b=0
         ),
         showlegend=False,
         uirevision="earthquake"

@@ -3,7 +3,7 @@ from utils.spacer import spacer
 
 
 def render_one_map_plot_container(title, figure):
-    with st.container(border=True):
+    with st.container(border=True, height="stretch"):
         st.markdown(f"##### {title}")
 
         spacer(1)
