@@ -54,7 +54,7 @@ def render_frequency_chart(df_trend):
         paper_bgcolor="rgba(0,0,0,0)",
         xaxis_title="Date",
         yaxis_title="Count",
-        height=450,
+        height=400,
         margin=dict(
             t=20,
             l=20,
@@ -127,7 +127,7 @@ def render_rolling_average(df_trend):
         paper_bgcolor="rgba(0,0,0,0)",
         xaxis_title="Date",
         yaxis_title="Average Magnitude",
-        height=450,
+        height=400,
         margin=dict(
             t=20,
             l=20,
@@ -189,7 +189,7 @@ def render_magnitude_over_time(df_trend):
         paper_bgcolor="rgba(0,0,0,0)",
         xaxis_title="Date",
         yaxis_title="Magnitude",
-        height=450,
+        height=400,
         margin=dict(
             t=20,
             l=20,
@@ -260,7 +260,7 @@ def render_depth_distribution(df_trend):
         paper_bgcolor="rgba(0,0,0,0)",
         xaxis_title="Depth",
         yaxis_title="Count",
-        height=450,
+        height=400,
         margin=dict(
             t=20,
             l=20,
@@ -331,7 +331,7 @@ def render_magnitude_distribution(df_trend):
         paper_bgcolor="rgba(0,0,0,0)",
         xaxis_title="Magnitude",
         yaxis_title="Count",
-        height=450,
+        height=400,
         margin=dict(
             t=20,
             l=20,

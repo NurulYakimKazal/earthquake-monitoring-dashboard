@@ -119,7 +119,7 @@ def render_ml_cluster_map(dff, show_noise):
                 lon=0,
             ),
         ),
-        height=700,
+        height=800,
         margin=dict(
             t=0,
             l=0,
