@@ -173,7 +173,7 @@ def render_earthquake_map(filtered_dff, unfiltered_dff):
     fig.update_layout(
         map=dict(
             style="carto-darkmatter",
-            zoom=2,
+            zoom=1.8,
             center=dict(
                 lat=0,
                 lon=0,
