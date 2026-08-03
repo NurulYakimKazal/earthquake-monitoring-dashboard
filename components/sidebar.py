@@ -5,24 +5,20 @@ from datetime import datetime
 def sidebar(stats):
     st.sidebar.header("Filters")
 
-    view_mode = st.sidebar.selectbox(
-        "View mode",
-        ["Scatter", "Heatmap", "Hexagon", "3D Scatter"],
-        key="view_mode"
-    )
-
     mag_range = st.sidebar.slider(
         "Magnitude",
-        0.0, 10.0,
+        min_value=0.0,
+        max_value=10.0,
+        value=(3.0, 7.5),
         step=0.1,
-        key="mag_range"
     )
 
     max_depth = st.sidebar.slider(
         "Max depth (km)",
-        0, 700,
+        min_value=0,
+        max_value=700,
+        value=300,
         step=10,
-        key="max_depth"
     )
 
     mag_min, mag_max = mag_range
@@ -64,7 +60,6 @@ def sidebar(stats):
     end_time = datetime.combine(end_date, datetime.max.time())
 
     return {
-        "view_mode": view_mode,
         "mag_min": mag_min,
         "mag_max": mag_max,
         "max_depth": max_depth,

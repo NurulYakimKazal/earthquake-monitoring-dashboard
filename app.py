@@ -5,39 +5,14 @@ from src.db.database import create_tables
 from modules.data_processing import get_clean_earthquake_data
 from modules.earthquake_filtering import filter_earthquakes
 from modules.init_db_and_sync import init_db_and_sync
-from modules.add_features import add_features
 from modules.compute_global_stats import compute_global_stats
 from modules.init_ui_state import init_ui_state
 from components.sidebar import sidebar
-from components.kpis import render_summary
-from components.map_tab import render_earthquake_map
-from components.analytics_tab import render_trends
-from components.catalog_tab import render_live_feed, render_catalog
-from components.ml_clustering_tab import render_ml_earthquake_map
-
 
 # -----------------------------
 # PAGE CONFIG
 # -----------------------------
 st.set_page_config(page_title="Earthquake Dashboard", layout="wide")
-
-st.title("🌍 Earthquake Monitoring Dashboard")
-
-st.write("")
-st.write("")
-st.write("")
-
-st.markdown(
-    """
-    **Data Source:** [USGS Earthquake Catalog API](https://earthquake.usgs.gov/fdsnws/event/1/)  
-    Real-time global earthquake events provided by the United States Geological Survey (USGS).
-    """
-)
-
-st.write("")
-st.write("")
-st.write("")
-
 
 # -----------------------------
 # INIT DB
@@ -49,11 +24,11 @@ init_db_and_sync(create_tables, run_etl)
 # -----------------------------
 df = get_clean_earthquake_data()
 
+st.session_state.unfiltered_df = df
+
 if df is None:
     st.warning("No earthquake data available.")
     st.stop()
-
-df = add_features(df)
 
 stats = compute_global_stats(df)
 
@@ -63,13 +38,11 @@ latest_time = stats["latest_time"]
 
 init_ui_state(stats)
 
-
 # ----------------------------------------
 # GENERATE SIDEBAR FILTERS (GLOBAL)
 # ----------------------------------------
 sidebar_result = sidebar(stats)
 
-view_mode = sidebar_result['view_mode']
 max_depth = sidebar_result['max_depth']
 mag_min = sidebar_result['mag_min']
 mag_max = sidebar_result['mag_max']
@@ -90,72 +63,33 @@ dff = filter_earthquakes(
     end_time
 )
 
-if dff.empty:
-    st.warning("No earthquakes match the selected filters.")
-    st.stop()
-
-latest = dff.head(1)
+st.session_state.filtered_df = dff
 
 
-# -----------------------------
-# HEADER SUMMARY
-# -----------------------------
-render_summary(latest_data, earliest, latest_time, dff)
-
-st.write("")
-
-# -----------------------------
-# TABS
-# -----------------------------
-tab_map, tab_analytics, tab_ml_clustering, tab_catalog = st.tabs(
+pg = st.navigation(
     [
-        "🌍 Map",
-        "📈 Analytics",
-        "🧠 ML Clustering",
-        "📍 Catalog",
+        st.Page(
+            "pages/overview.py",
+            title="Overview",
+            icon=":material/dashboard:",
+            default=True,
+        ),
+        st.Page(
+            "pages/analytics.py",
+            title="Analytics",
+            icon=":material/analytics:",
+        ),
+        st.Page(
+            "pages/ml_clustering.py",
+            title="ML Clustering",
+            icon=":material/analytics:",
+        ),
+        st.Page(
+            "pages/catalog.py",
+            title="Live Feed & Catalog",
+            icon=":material/analytics:",
+        )
     ]
 )
 
-
-# -----------------------------
-# MAP
-# -----------------------------
-with tab_map:
-    st.write("")
-    render_earthquake_map(dff, view_mode, latest)
-
-# -----------------------------
-# ANALYTICS
-# -----------------------------
-with tab_analytics:
-    st.write("")
-    render_trends(dff)
-
-
-# -----------------------------
-# ML Clustering
-# -----------------------------
-with tab_ml_clustering:
-    st.write("")
-    render_ml_earthquake_map(dff)
-
-# -----------------------------
-# CATALOG
-# -----------------------------
-with tab_catalog:
-    st.write("")
-
-    column1, column2 = st.columns([2, 3], border=True)
-    with column1:
-        render_live_feed(df)
-
-
-    with column2:
-        render_catalog(df)
-
-
-st.divider()
-
-st.caption(
-    "Earthquake Monitoring Dashboard • Data provided by USGS Earthquake Catalog API"
-)
+pg.run()

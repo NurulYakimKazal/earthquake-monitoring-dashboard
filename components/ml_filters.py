@@ -1,9 +1,9 @@
 import streamlit as st
 
 
-def ml_controls():
+def render_ml_parameter():
     with st.container(border=True):
-        st.subheader("ML Clustering Controls")
+        st.markdown("#### ML Clustering Controls")
 
         col1, col2, col3 = st.columns(3, gap='large')
 
@@ -14,12 +14,12 @@ def ml_controls():
             algorithm = st.selectbox(
                 "Clustering Algorithm",
                 ["HDBSCAN", "DBSCAN"],
-                key="ml_algorithm"
+                index=0
             )
 
             show_noise = st.checkbox(
                 "Show noise (Cluster: -1)",
-                key="show_noise"
+                value=True
             )
 
         # =========================
@@ -29,14 +29,16 @@ def ml_controls():
             if algorithm == "HDBSCAN":
                 min_cluster_size = st.slider(
                     "HDBSCAN min cluster size",
-                    3, 50,
-                    key="hdb_min_cluster_size"
+                    min_value=3,
+                    max_value=50,
+                    value=8
                 )
             else:
                 eps_km = st.slider(
                     "DBSCAN eps (km)",
-                    5, 100,
-                    key="dbscan_eps_km"
+                    min_value=5,
+                    max_value=100,
+                    value=30
                 )
 
         # =========================
@@ -46,14 +48,16 @@ def ml_controls():
             if algorithm == "HDBSCAN":
                 min_samples = st.slider(
                     "HDBSCAN min samples",
-                    1, 20,
-                    key="hdb_min_samples"
+                    min_value=1,
+                    max_value=20,
+                    value=5
                 )
             else:
                 min_samples = st.slider(
                     "DBSCAN min samples",
-                    2, 20,
-                    key="dbscan_min_samples"
+                    min_value=2,
+                    max_value=20,
+                    value=5
                 )
 
         # =========================
