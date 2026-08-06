@@ -1,6 +1,6 @@
 import numpy as np
 import plotly.graph_objects as go
-from utils.empty_graph import empty_chart
+from modules.empty_graph import empty_chart
 
 
 def render_frequency_chart(df_trend):

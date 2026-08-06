@@ -4,7 +4,7 @@ from components.time_coverage_kpis import render_latest_earthquake, render_time_
 from components.kpis import render_kpis_with_border
 from components.one_map_plot_container import render_one_map_plot_container
 from components.footer import render_footer
-from utils.spacer import spacer
+from components.spacer import spacer
 from modules.global_stats import prepare_global_stats
 from modules.seismic_data_kpis import prepare_seismic_kpis
 from modules.earthquake_map import render_earthquake_map

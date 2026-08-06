@@ -3,7 +3,7 @@ from components.header import render_page_title
 from components.one_map_plot_container import render_one_map_plot_container
 from components.chart_grid_container import render_chart_grid_container
 from components.footer import render_footer
-from utils.spacer import spacer
+from components.spacer import spacer
 from modules.analytics_plots import (
     render_frequency_chart,
     render_rolling_average,

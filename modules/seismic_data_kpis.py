@@ -19,8 +19,3 @@ def prepare_seismic_kpis(df):
     }
 
     return kpi_values
-
-
-
-
-

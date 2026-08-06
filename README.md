@@ -130,7 +130,6 @@ StreamlitEarthquakeDashboard/
 │   ├── archived/
 │   ├── db/
 │   └── etl/
-├── utils/                  # helper functions
 ├── app.py                  # Streamlit entry point
 ├── requirements.txt
 └── README.md

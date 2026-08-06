@@ -4,7 +4,7 @@ from components.ml_filters import render_ml_parameter
 from components.kpis import render_kpis_with_border
 from components.one_map_plot_container import render_one_map_plot_container
 from components.footer import render_footer
-from utils.spacer import spacer
+from components.spacer import spacer
 from modules.ml_data_processing import (
     prepare_clustered_data,
     get_cluster_summary,

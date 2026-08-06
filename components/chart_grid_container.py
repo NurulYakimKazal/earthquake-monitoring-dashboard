@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.spacer import spacer
+from components.spacer import spacer
 
 def render_chart_grid_container(charts):
     cols = st.columns(len(charts), gap="xsmall", border=True)
